@@ -1,0 +1,261 @@
+<!-- <!DOCTYPE html> -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js" integrity="sha512-uaz5GpnQoE6t5echKlX8P52czvsIGgLPcvlzfvRubLZ1Hp8JemUDnbUiAahbVtPb+jUVrNETuXvAhDDF/N3M4w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Includes the p5.collide2D addon library -->
+    <script defer src="https://unpkg.com/p5.collide2d"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/addons/p5.sound.js" integrity="sha512-TU9AWtV5uUZPX8dbBAH8NQF1tSdigPRRT82vllAQ1Ke28puiqLA6ZVKxtUGlgrH6yWFnkKy+sE6luNEGH9ar0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+</head>
+    <style>
+         body {
+            background-image: url('SimBack1.jpg');
+            background-size: cover;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            
+
+        }
+        h1 { 
+            position: absolute;
+            left: 16%;
+            /* left: 44%; */ 
+
+        }
+        h3 {
+            position: absolute;
+            /* top: 7%;
+            left: 41%; */
+            top: 25%; 
+            left:15%;
+
+        }
+        #button1 {
+            /* top: 13%;
+            left: 48%; */
+            /* top: 55%;
+            left: 33%;  */
+            position: absolute;
+            top:60%;
+            left:30%;
+            color:black;
+        }
+        #button2 {
+            position: absolute;
+            top:60%;
+            left: 53%; 
+        }
+        .one{
+            background-color: blue;
+            height: 20%;
+            width: 30%;
+            position: absolute;
+            left: 2%; 
+            top: 2%; 
+            /* 35% */
+
+        }
+        h4 {
+            position: absolute;
+            top:15%;
+            left:3%;
+        }
+
+    </style>
+<body>
+    <div class="one">
+        <h1>Untitled Cube Game</h1>
+        <h3>Made by Ecthelion (Takashi) Trawick</h3>
+        <button onclick="play()" id = "button1">PLAY</button>
+        <button onclick ="Story()" id = "button2">Story?</button>
+       <!-- Crappy experiment -->
+      
+    </div>
+    <h4>*Arrow keys to move</h4>
+
+    <script>
+        function play(){
+        location.href = "gamegame.html"
+    }
+    function Story(){
+        location.href = "story.html"
+    }
+    let w = window.innerWidth
+    let h = window.innerHeight
+    let yes
+    let hit = false;
+    let hit2 = false 
+    let hit3 = false;
+    let hit4 = false;
+    a = w/2
+    b = h/2
+    let player
+    let bx = w/2
+    let by = h/2
+    let color = "red"
+    let water
+    let enemy1
+    let block1
+    let portal
+        let counter = -1
+    let positiona1 = w-100
+    let positionala2 = h-160
+    let timetime1 = 5
+    let f = true
+
+
+    function preload(){
+        song = loadSound('Lobbymusic1.mp3')
+        // backimg = loadImage('Mainbackground.jpg')
+    }
+
+
+    function setup(){
+    createCanvas(w,h)
+    // frameRate(60)
+    player = new jumper()
+    water = new nig()
+    enemy1 = new fight1()
+    block1 = new blocky() 
+    portal = new portal1()
+    }
+    function jumper(){
+            //I will make a BOX THAT STARTS AT TOP OF SCREEN AND FALLS DOWN with "gravity"
+            //start postition of box
+        this.x = 25 
+        this.y = 10
+            //force of gravity 
+        this.gravity = 0.5
+            //opposing force
+        this.lift = -10
+
+            //velocity
+        this.velocity = 0
+
+            //function to set up initial jumper
+        this.show = function (){
+                //here iw where we will determine what it will look like
+        fill("black")
+        rect(this.x,this.y,50,50)
+            }
+            //function to loop on repeat within the draw function
+        this.update = function(){
+            if (this.y <= h - 25){
+        //add current velocity to gravity
+            this.velocity += this.gravity
+        //what direction am i traveling 
+            this.y += this.velocity
+        //air ressistance / resistance to falling
+            this.velocity * 0.5 
+        }
+            if(this.y >= h - 25){
+                this.velocity = 0
+        }
+
+        hit = collideRectRect(0, h-100, w, 100,this.x,this.y,50,50); 
+        hit2 = collideRectRect(positiona1,positionala2,60,60,this.x,this.y,50,50);
+        hit3 = collideRectRect(w - 300,h - 250,150,50,this.x,this.y,50,50); 
+        hit4 = collideRectRect(w - 50,h - 400,50,100,this.x,this.y,50,50)
+        
+        if(hit == true){
+            //og platform
+            console.log(hit)
+            this.velocity = -1
+            
+        }
+        if(hit3 == true){
+            //platform 1st page
+            this.velocity = -1
+            
+        }
+        if(f = true){
+            if(song.isPlaying()== false){
+                song.play() 
+            }
+            // song.play()
+        }
+
+
+                
+            }
+        this.up = function(){
+            if (keyIsDown(UP_ARROW) && (this.y > 0)){
+                this.y += this.lift * 1
+
+            }
+                            
+            if ((keyIsDown(RIGHT_ARROW )) && (this.x < w - 50)) {
+                this.x += 10;
+            }
+            if ((keyIsDown(LEFT_ARROW)) && (this.x > 25)) {
+                this.x -= 10;
+            }
+        }
+    }
+    function nig(){
+        this.exist = function(){
+                fill('lightgray')
+                rect(0, h-100, w, 100)
+                
+
+        }
+
+    }
+    // collision(x1,y1,w1.h1,x2,y2,w1,h2)
+    function fight1(){
+        this.direction = 'left'
+        this.exist = function(){
+            fill('red')
+            rect(positiona1,positionala2,60,60)
+        }
+        this.chase = function() {
+            if ((positiona1 > 60) && (this.direction == "left")) {
+                positiona1 -= 10
+                if (positiona1 <= 60) {
+                    positiona1 = 60
+                    this.direction = "right"
+                }
+            }
+
+            if ((positiona1 < w - 60) && (this.direction == "right")) {
+                positiona1 += 10
+                if (positiona1 >= w - 60) {
+                    positiona1 = w - 60
+                    this.direction = "left"
+                }
+            }
+        }
+    }
+    function blocky(){
+        this.exist = function(){
+        fill('lightgray')
+        rect(w - 300,h - 250,150,50 )
+        }  
+    }
+    function portal1(){
+        this.exist = function(){
+            fill('blue')
+            rect(w - 50,h - 400,50,100)
+        }
+    }
+    function draw(){
+            clear()
+            player.show()
+            player.update()
+            player.up()
+            water.exist()
+            block1.exist()
+    }
+          
+    </script>
+    <style>
+
+    </style>
+</body>
+</html>

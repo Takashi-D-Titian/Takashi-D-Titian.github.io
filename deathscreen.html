@@ -1,0 +1,84 @@
+<!-- <!DOCTYPE html> -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js" integrity="sha512-uaz5GpnQoE6t5echKlX8P52czvsIGgLPcvlzfvRubLZ1Hp8JemUDnbUiAahbVtPb+jUVrNETuXvAhDDF/N3M4w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Includes the p5.collide2D addon library -->
+    <script defer src="https://unpkg.com/p5.collide2d"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/addons/p5.sound.js" integrity="sha512-TU9AWtV5uUZPX8dbBAH8NQF1tSdigPRRT82vllAQ1Ke28puiqLA6ZVKxtUGlgrH6yWFnkKy+sE6luNEGH9ar0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+</head>
+    <style>
+        body {
+            width: 100%;
+            height: 100%;
+            /* overflow: hidden; */
+            margin: 0;
+            padding: 0;
+            color:black;
+        }
+        h1{
+            position: absolute;
+        }
+        #backback{
+            position: fixed; 
+            left:90%;
+            width:10%;
+            height:10%;
+            color:red;
+        }
+    </style>
+<body>
+    <h1>
+        Your back!<br>
+        "heavy breathing"<br>
+        How was the trip?<br>
+        It sucked.<br>
+        Ha Ha<br>
+        You suck<br>
+        Anyway, did you find your purpose?<br>
+        There was nothing for me to work off of. How in hell was I was supposed to find my purpose?<br>
+        Maybe you were the purpose.<br>
+        What?<br>
+        Maybe you were brought here to experience somthing..<br>
+        Like?<br>
+        How preicous life is.<br>
+        Huh? How?<br>
+        Didnt you die many times?<br>
+        Uhh...<br>
+        Thought so, but each time you learned somthing. Not only did you figure out that you only get one shot, but you also had to learn from your mistakes. Each time you failed, it helped you bit by bit learn how to progress and eventually succeed!<br>
+        Well, I never thought of it that way. <br>
+        Not many do.<br>
+        The journey still sucked.<br>
+        I bet.<br>
+        But...<br>
+        But?<br>
+        It was fun. A good experience.<br>
+        You found your purpose.<br>
+        Yes, now I have.<br>
+        Now tell me what was that newfound purpose of yours?<br>
+        To Live.<br>
+
+
+
+
+        
+    </h1>
+    <button onclick="back()" id = 'backback'>Go Back?</button>
+    <script>
+            function preload(){
+        song = loadSound('Lobbymusic1.mp3')
+    }
+    function back(){
+        location.href = "index.html"
+    }
+    function draw(){
+        if(song.isPlaying()== false){
+                song.play() 
+            }
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!-- <!DOCTYPE html> -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js" integrity="sha512-uaz5GpnQoE6t5echKlX8P52czvsIGgLPcvlzfvRubLZ1Hp8JemUDnbUiAahbVtPb+jUVrNETuXvAhDDF/N3M4w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Includes the p5.collide2D addon library -->
+    <script defer src="https://unpkg.com/p5.collide2d"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/addons/p5.sound.js" integrity="sha512-TU9AWtV5uUZPX8dbBAH8NQF1tSdigPRRT82vllAQ1Ke28puiqLA6ZVKxtUGlgrH6yWFnkKy+sE6luNEGH9ar0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+</head>
+    <style>
+         body {
+            width: 100%;
+            height: 100%;
+            /* overflow: hidden; */
+            margin: 0;
+            padding: 0;
+            
+
+        }
+        h1{
+            position: absolute;
+        }
+        #backback{
+            position: fixed; 
+            left:90%;
+            width:10%;
+            height:10%;
+            color:red;
+        }
+
+    </style>
+<body>
+    <h1>Where am I?<br>
+        Oh you arrived!<br>
+        Who are you? <br>
+        You must be very confused huh?<br>
+        No kidding, Where am I?<br>
+        Well, your here. <br>
+        Where is here?<br>
+        There. <br>
+        Where is there?<br>
+        Here. <br>
+        Fuck. Where is here if here is there?<br>
+        Here is there because there is here. <br>
+        ...<br>
+        Are you here because you are there? Or are you there because you're there?<br>
+        Man, I don't know, I just fell down and I suddenly woke up here in this bright hellhole. <br>
+        Crazy<br>
+        Whats my purpose?<br>
+        To find out. <br>
+        Find out what? <br>
+        Your purpose. <br>
+        Great...<br>
+        GO NOW and find you're PURPOSE<br>
+        Alright...(Damn that guy was unhelpful..)
+        
+
+    </h1>
+    <button onclick="back()" id = 'backback'>Go Back</button>
+    <script>
+        function back(){
+        location.href = "index.html"
+    }
+    function preload(){
+        song = loadSound('Lobbymusic1.mp3')
+    }
+    function draw(){
+        if(song.isPlaying()== false){
+                song.play() 
+            }
+    }
+    </script>    
+
+</body>
+</html>
