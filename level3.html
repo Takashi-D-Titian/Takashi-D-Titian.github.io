@@ -1,0 +1,386 @@
+<!-- <!DOCTYPE html> -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js" integrity="sha512-uaz5GpnQoE6t5echKlX8P52czvsIGgLPcvlzfvRubLZ1Hp8JemUDnbUiAahbVtPb+jUVrNETuXvAhDDF/N3M4w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Includes the p5.collide2D addon library -->
+    <script defer src="https://unpkg.com/p5.collide2d"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/addons/p5.sound.js" integrity="sha512-TU9AWtV5uUZPX8dbBAH8NQF1tSdigPRRT82vllAQ1Ke28puiqLA6ZVKxtUGlgrH6yWFnkKy+sE6luNEGH9ar0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+</head>
+    <style>
+          body {
+            background-image: url('SimBack1.jpg');
+            background-size: cover;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+<body>
+
+
+    <script>
+    
+    let w = window.innerWidth
+    let h = window.innerHeight
+    let yes
+    let hit = false;
+    let hit2 = false; 
+    let hit3 = false;
+    let hit4 = false;
+    let hit5 = false;
+    let hit6 = false;
+    let hit7 = false;
+    let hit8 = false;
+    a = w/2
+    b = h/2
+    let player
+    let bx = w/2
+    let by = h/2
+    let color = "red"
+    let water
+    let enemy1
+    let block1
+    let portal
+        let counter = -1
+    let positionala2 = 50
+    let positiona1 = w - 100
+    let timetime1 = 5
+    let block2
+    let bar1
+    let block3
+    let bar2
+    let button1 
+    let press = false
+    let cageposition1 = w-150
+    let cageposition2 = w-100
+    let p = 'green'
+    let positioning1 = 100
+    let hithit = false;
+    let spike1
+    let aa = 100
+    let bb = 295
+    let movemove1 = w - 700
+    let movemove2 = h - 600
+    let aw = "left"
+    let movemove3 = 200
+    let movemove4 = h - 60
+    let bw = "left"
+    let block4
+    let move5 = 450
+    let move6 = 70
+    let cw = "left"
+
+    
+    function preload(){
+        song = loadSound("hero-s-time-paulo-kalazzi-main-version-2639-01-51.mp3")
+    }
+
+
+    function setup(){
+    createCanvas(w,h)
+    // frameRate(60)
+    player = new jumper()
+    water = new nig()
+    enemy1 = new fight1()
+    block1 = new blocky() 
+    portal = new portal1()
+    block2 = new blocky2()
+    block3 = new blocky3()
+    block4 = new blocky4()
+    
+    }
+    function jumper(){
+            //I will make a BOX THAT STARTS AT TOP OF SCREEN AND FALLS DOWN with "gravity"
+            //start postition of box
+        this.x = w-60
+        this.y = 250
+            //force of gravity 
+        this.gravity = 0.5
+            //opposing force
+        this.lift = -10
+
+            //velocity
+        this.velocity = 0
+
+            //function to set up initial jumper
+        this.show = function (){
+                //here iw where we will determine what it will look like
+        fill("black")
+        rect(this.x,this.y,50,50)
+            }
+            //function to loop on repeat within the draw function
+        this.update = function(){
+            if (this.y <= h - 25){
+        //add current velocity to gravity
+            this.velocity += this.gravity
+        //what direction am i traveling 
+            this.y += this.velocity
+        //air ressistance / resistance to falling
+            this.velocity * 0.5 
+        }
+            if(this.y >= h - 25){
+                this.velocity = 0
+        }
+
+        hit = collideRectRect(0, h-100, w, 100,this.x,this.y,50,50); 
+        hit2 = collideRectRect(movemove3,movemove4,150,50,this.x,this.y,50,50);
+        hit3 = collideRectRect(w - 160,h - 160,150,50,this.x,this.y,50,50); 
+        hit4 = collideRectRect(10,10,100,100,this.x,this.y,50,50)
+        hit5 = collideRectRect(movemove1,movemove2,150,50,this.x,this.y,50,50)
+        hit6 = collideRectRect(positiona1,positionala2,60,100,this.x,this.y,50,50)
+        hit7 = collideRectRect(move5,move6,110,60,this.x,this.y,50,50)
+        
+        if(hit == true){
+            //og platform
+            // this.velocity = -1
+            location.href = "index.html"
+            
+        }
+        if(hit2 == true && bw == "left"){
+            this.velocity = -6
+        }
+        if(hit2 == true && bw == "right"){
+            this.velocity = 0
+        }
+        if(hit3 == true){
+            //platform 1st page
+            this.velocity = -1
+            
+        }
+        if(hit4 == true){
+            //portal 1 
+            location.href = "level4.html"
+
+        }
+        if(hit5 == true && aw == "left"){
+            this.velocity = -6
+        }
+        if(hit5 == true && aw == "right"){
+            this.velocity = 0
+        }
+        if(hit6 == true){
+            location.href = "index.html" 
+        }
+        if(hit7 == true){
+            location.href = "index.html" 
+        }
+    }
+        this.up = function(){
+            if (keyIsDown(UP_ARROW) && (this.y > 0)){
+                this.y += this.lift * 1
+
+            }
+                            
+            if ((keyIsDown(RIGHT_ARROW )) && (this.x < w - 50)) {
+                this.x += 10;
+            }
+            if ((keyIsDown(LEFT_ARROW)) && (this.x > 25)) {
+                this.x -= 10;
+            }
+        }
+    }
+    function nig(){
+        this.exist = function(){
+                fill('red')
+                rect(0, h-100, w, 100)
+
+                
+
+        }
+
+    }
+    function fight1(){
+        this.direction = 'left'
+        this.exist = function(){
+            fill('red')
+            rect(positiona1,positionala2,60,100)
+        }
+        this.chase = function() {
+            if ((positiona1 > 0) && (this.direction == "left")) {
+                positiona1 -= 25
+                if (positiona1 <= 0) {
+                    positiona1 = 0
+                    this.direction = "right"
+                }
+            }
+
+            if ((positiona1 < w - 70) && (this.direction == "right")) {
+                positiona1 += 25
+                if (positiona1 >= w - 70) {
+                    positiona1 = w - 70
+                    this.direction = "left"
+                }
+            }
+        }
+    }
+    function blocky(){
+        this.exist = function(){
+        fill('lightgray')
+        rect(w - 160,h - 160,150,50 )
+        }  
+    }
+    function portal1(){
+        this.exist = function(){
+            fill('blue')
+            rect(10,10,100,100)
+        }
+    }
+    function blocky2(){
+        this.direction = 'left'
+        this.exist = function(){
+            fill('lightgray')
+            rect(movemove1,movemove2,150,50)
+
+        }
+        this.chase = function() {
+            if (( movemove2 > 60) && (aw == "left")) {
+                movemove2 -= 5
+                if (movemove2 <= 60) {
+                    movemove2 = 60
+                    aw = "right"
+                }
+            }
+
+            if ((movemove2 < h - 60) && (aw == "right")) {
+                movemove2 += 5
+                if (movemove2 >= h - 60) {
+                    movemove2 = h - 60
+                    aw = "left"
+                }
+            }
+        }
+    }
+
+    function blocky3(){
+        this.direction = 'left'
+        this.exist = function(){
+            fill('lightgray')
+            rect(movemove3,movemove4,150,50)
+
+        }
+        this.chase = function() {
+            if (( movemove4 > 60) && (bw == "left")) {
+                movemove4 -= 5
+                if (movemove4 <= 60) {
+                    movemove4 = 60
+                    bw = "right"
+                }
+            }
+
+            if ((movemove4 < h - 60) && (bw == "right")) {
+                movemove4 += 5
+                if (movemove4 >= h - 60) {
+                    movemove4 = h - 60
+                    bw = "left"
+                }
+            }
+        }
+    }
+
+    function button(){
+        this.exist = function(){
+            fill(p)
+            rect(25,200,40,40)
+            if(press == true){
+                p = 'blue'
+            }
+        }
+    }
+    function triangle1(){
+        this.direction = "left"
+        this.exist = function(){
+            fill('red')
+            // triangle(0, 250, 90, 300, 0, 345)
+            rect(aa,bb,100,60)
+
+        }
+
+        // 25 - 100
+        this.move = function() {
+            if ((aa > 25) && (this.direction == "left")) {
+                aa -= 2
+                if (aa <= 25) {
+                    aa = 25
+                    this.direction = "right"
+                }
+            }
+
+            if ((aa < 110) && (this.direction == "right")) {
+                aa += 2
+                if (aa >= 110) {
+                    aa = 110
+                    this.direction = "left"
+                }
+            }
+        }
+    }
+    function blocky4(){
+        this.direction = 'left'
+        this.exist = function(){
+            fill('red')
+            rect(move5,move6,110,60)
+
+        }
+        this.chase = function() {
+            if (( move6 > 60) && (cw == "left")) {
+                move6 -= 25
+                if (move6 <= 60) {
+                    move6 = 60
+                    cw = "right"
+                }
+            }
+
+            if ((move6 < h - 60) && (cw == "right")) {
+                move6 += 25
+                if (move6 >= h - 60) {
+                    move6 = h - 60
+                    cw = "left"
+                }
+            }
+        }
+    }
+
+    function draw(){
+            clear()
+            if(song.isPlaying()== false){
+                song.play() 
+            }
+            player.show()
+            player.update()
+            player.up()
+            enemy1.exist()
+            enemy1.chase()
+            // enemy1.exist()
+            // enemy1.chase()
+            block1.exist()
+            portal.exist()
+            block2.exist()
+            block2.chase()
+            block3.exist()
+            block3.chase()
+            block4.exist()
+            block4.chase()
+            water.exist() 
+    }
+</script>
+<body>
+
+
+    <style>
+
+    </style>
+</body>
+</html>
+          
+    </script>
+    <style>
+
+    </style>
+</body>
+</html>
