@@ -1,0 +1,212 @@
+<!-- <!DOCTYPE html> -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js" integrity="sha512-uaz5GpnQoE6t5echKlX8P52czvsIGgLPcvlzfvRubLZ1Hp8JemUDnbUiAahbVtPb+jUVrNETuXvAhDDF/N3M4w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Includes the p5.collide2D addon library -->
+    <script defer src="https://unpkg.com/p5.collide2d"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/addons/p5.sound.js" integrity="sha512-TU9AWtV5uUZPX8dbBAH8NQF1tSdigPRRT82vllAQ1Ke28puiqLA6ZVKxtUGlgrH6yWFnkKy+sE6luNEGH9ar0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- <script src="game.js"></script> -->
+    <style>
+        body {
+            background-image: url('SimBack1.jpg');
+            background-size: cover;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+
+        }
+        #one{
+            position: absolute;
+        }
+        h1{
+            position: absolute;
+        }
+        h3{
+            position: absolute;
+            top:5%;
+        }
+    
+    </style>
+    
+</head>
+
+<body>
+    <script>
+    function play(){
+        location.href = "gamegame.html"
+    }
+
+    let w = window.innerWidth
+    let h = window.innerHeight
+
+    let hit1pg2 = false
+    let hit4 = false
+    let hit3pg3 = false
+    let hit1 = false
+
+    a = w/2
+    b = h/2
+    let player
+    let bx = w/2
+    let by = h/2
+    let color = "red"
+    let water
+    let counter = -1
+    let positiona1 = w-100
+    let positionala2 = h-160
+    let timetime1 = 5
+    let portalb
+    let block2
+    let block1
+    let block3
+
+    function preload(){
+        song = loadSound("hero-s-time-paulo-kalazzi-main-version-2639-01-51.mp3")
+    }
+
+    function setup(){
+    createCanvas(w,h)
+    // frameRate(60)
+    player = new jumper()
+    water = new nig()
+    portalb = new portal2()
+    block2 = new blocky2()
+    block1 = new blocky1()
+    }
+    function jumper(){
+            //I will make a BOX THAT STARTS AT TOP OF SCREEN AND FALLS DOWN with "gravity"
+            //start postition of box
+    this.x = bx 
+    this.y = 0
+            //force of gravity      
+    this.gravity = 0.5
+            //opposing force
+    this.lift = -11.24
+
+            //velocity
+    this.velocity = 0
+
+            //function to set up initial jumper
+    this.show = function (){
+                //here iw where we will determine what it will look like
+    fill("black")
+    rect(this.x,this.y,50,50)
+    }
+            //function to loop on repeat within the draw function
+    this.update = function(){   
+        if (this.y <= h - 25){
+        //add current velocity to gravity
+            this.velocity += this.gravity
+            this.velocity*0.9
+        //what direction am i traveling 
+            this.y += this.velocity
+        //air ressistance / resistance to falling
+            this.velocity * 0.5 
+        }
+        if(this.y >= h - 25){
+            this.velocity = 0
+        }
+
+        hit = collideRectRect(0, h-100, w, 100,this.x,this.y,50,50);
+        hit1pg2 = collideRectRect(150,h - 250,150,50,this.x,this.y,50,50)
+        hit4 = collideRectRect(w - 50,0,50,100,this.x,this.y,50,50)
+        hit1 = collideRectRect(450,h - 450,150,50,this.x,this.y,50,50)
+
+
+        if(hit == true){
+            //og platform
+            console.log(hit)
+            this.velocity = -1
+            
+        }
+        if(hit1pg2 == true){
+            this.velocity = -1
+        }
+        if(hit4 == true){
+            //portal 1 
+            location.href = "level2.html"
+
+        }
+        if(hit1 == true){
+            //og platform
+            console.log(hit)
+            this.velocity = -1
+            
+        }
+
+
+                
+            }
+        this.up = function(){
+            if (keyIsDown(UP_ARROW) && (this.y > 0)){
+                // this.velocity = 0.5
+                this.y += this.lift * 1.2
+                
+
+
+            }
+                            
+            if ((keyIsDown(RIGHT_ARROW )) && (this.x < w - 50)) {
+                this.x += 20;
+            }
+            if ((keyIsDown(LEFT_ARROW)) && (this.x > 25)) {
+                this.x -= 20;
+            }
+        }
+    }
+    function nig(){
+        this.exist = function(){
+        fill('lightgray')
+        rect(0, h-100, w, 100)
+                
+
+    }
+
+    }
+    function portal2(){
+    this.exist = function(){
+        fill('blue')
+        rect(w - 50,0,50,100)
+    }
+    }
+    function blocky2(){
+    this.exist = function(){
+        fill('lightgray')
+        rect(150,h - 250,150,50 )
+    }
+    }
+    function blocky1(){
+        this.exist = function(){
+            fill('lightgray')
+            rect(450,h - 450,150,50)
+        }
+    }
+        
+        function draw(){
+            clear()
+            if(song.isPlaying()== false){
+                song.play() 
+            }
+            player.show()
+            player.update()
+            player.up()
+            water.exist()
+            portalb.exist()
+            block2.exist()
+            block1.exist()
+            
+        }
+    </script>
+    <div class="one">
+        <h1>Well done! Now we have increased your jump/movement speed slightly, try make it to the BLUE portal! </h1>
+        <h3>Also watch out! (agian)</h3>
+    </div>
+</body>
+
+
+</html>

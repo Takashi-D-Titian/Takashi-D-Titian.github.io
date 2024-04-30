@@ -1,0 +1,205 @@
+<!-- <!DOCTYPE html> -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js" integrity="sha512-uaz5GpnQoE6t5echKlX8P52czvsIGgLPcvlzfvRubLZ1Hp8JemUDnbUiAahbVtPb+jUVrNETuXvAhDDF/N3M4w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Includes the p5.collide2D addon library -->
+    <script defer src="https://unpkg.com/p5.collide2d"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/addons/p5.sound.js" integrity="sha512-TU9AWtV5uUZPX8dbBAH8NQF1tSdigPRRT82vllAQ1Ke28puiqLA6ZVKxtUGlgrH6yWFnkKy+sE6luNEGH9ar0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+</head>
+    <style>
+        body {
+            background-image: url('SimBack1.jpg');
+            background-size: cover;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+<body>
+    <script>
+        let w = window.innerWidth
+        let h = window.innerHeight
+        let yes
+        let hit = false;
+        let hit2 = false 
+        let hit3 = false;
+        let hit4 = false;
+        a = w/2
+        b = h/2
+        let player
+        let bx = w/2
+        let by = h/2
+        let color = "red"
+        let water
+        let enemy1
+        let block1
+        let portal
+        let counter = -1
+        let positiona1 = w-100
+            let positionala2 = h-160
+        let timetime1 = 5
+        let f = true
+        let pp = 10
+
+
+    function preload(){
+        song = loadSound('Coast - Anno Domini Beats.mp3')
+        // backimg = loadImage('Mainbackground.jpg')
+    }
+
+
+    function setup(){
+    createCanvas(w,h)
+    // frameRate(60)
+    player = new jumper()
+    water = new nig()
+    enemy1 = new fight1()
+    block1 = new blocky() 
+    portal = new portal1()
+    
+    }
+    function jumper(){
+            //I will make a BOX THAT STARTS AT TOP OF SCREEN AND FALLS DOWN with "gravity"
+            //start postition of box
+        this.x = 25 
+        this.y = pp
+            //force of gravity 
+        this.gravity = 0.5
+            //opposing force
+        this.lift = -10
+
+            //velocity
+        this.velocity = 0
+
+            //function to set up initial jumper
+        this.show = function (){
+                //here iw where we will determine what it will look like
+        fill("black")
+        rect(this.x,this.y,50,50)
+            }
+            //function to loop on repeat within the draw function
+        this.update = function(){
+            if (this.y <= h - 25){
+        //add current velocity to gravity
+            this.velocity += this.gravity
+        //what direction am i traveling 
+            this.y += this.velocity
+        //air ressistance / resistance to falling
+            this.velocity * 0.5 
+        }
+            if(this.y >= h - 25){
+                this.velocity = 0
+        }
+
+        hit = collideRectRect(0, h-100, w, 100,this.x,this.y,50,50); 
+        hit2 = collideRectRect(positiona1,positionala2,60,60,this.x,this.y,50,50);
+        hit3 = collideRectRect(100,h - 250,150,50,this.x,this.y,50,50); 
+        hit4 = collideRectRect(w-52,2,50,100,this.x,this.y,50,50)
+        
+        if(hit == true){
+            //og platform
+            console.log(hit)
+            this.velocity = -1
+            
+        }
+        if(hit3 == true){
+            //platform 1st page
+            this.velocity = -1
+            
+        }
+        if(hit4 == true){
+            
+        }
+        if(f = true){
+            if(song.isPlaying()== false){
+                song.play() 
+            }
+            // song.play()
+        }
+
+
+                
+            }
+        this.up = function(){
+            if (keyIsDown(UP_ARROW) && (this.y > 0)){
+                this.y += this.lift * 1
+
+            }
+                            
+            if ((keyIsDown(RIGHT_ARROW )) && (this.x < w - 50)) {
+                this.x += 10;
+            }
+            if ((keyIsDown(LEFT_ARROW)) && (this.x > 25)) {
+                this.x -= 10;
+            }
+        }
+    }
+    function nig(){
+        this.exist = function(){
+                fill('lightgray')
+                rect(0, h-100, w, 100)
+                
+
+        }
+
+    }
+    // collision(x1,y1,w1.h1,x2,y2,w1,h2)
+    function fight1(){
+        this.direction = 'left'
+        this.exist = function(){
+            fill('red')
+            rect(positiona1,positionala2,60,60)
+        }
+        this.chase = function() {
+            if ((positiona1 > 60) && (this.direction == "left")) {
+                positiona1 -= 10
+                if (positiona1 <= 60) {
+                    positiona1 = 60
+                    this.direction = "right"
+                }
+            }
+
+            if ((positiona1 < w - 60) && (this.direction == "right")) {
+                positiona1 += 10
+                if (positiona1 >= w - 60) {
+                    positiona1 = w - 60
+                    this.direction = "left"
+                }
+            }
+        }
+    }
+    function blocky(){
+        this.exist = function(){
+        fill('lightgray')
+        rect(100,h - 250,150,50 )
+        }  
+    }
+    function portal1(){
+        this.exist = function(){
+            fill('blue')
+            rect(w-52,2,50,100)
+        }
+    }
+    function boss(){
+        this.exist = function(){
+
+        }
+    }
+    function draw(){
+            clear()
+            player.show()
+            player.update()
+            player.up()
+            water.exist()
+            block1.exist()
+            portal.exist()
+    }
+    </script>
+</body>
+</html>
